@@ -54,6 +54,26 @@ public class Program {
 //        Integer id = sc.nextInt();
 //        sellerDao.deleteById(id);
 
+////        System.out.println("\n====================");
+//        Department dep = new Department(null, "Music");
+////        departmentDao.insert(dep);
+////        System.out.println(dep);
+//
+//        System.out.println("\n====================");
+//        dep.setName("Jao");
+//        departmentDao.update(dep);
+//        System.out.println(dep);
+
+//        System.out.println("\n====================");
+//        departmentDao.deleteById(9);
+
+        System.out.println("\n====================");
+        List<Department> department = departmentDao.findAll();
+
+        for (Department d : department) {
+            System.out.println(d);
+        }
+
 
 
     }
