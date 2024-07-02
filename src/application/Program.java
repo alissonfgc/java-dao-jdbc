@@ -33,10 +33,17 @@ public class Program {
             System.out.println(s);
         }
 
-        System.out.println("\n====================");
+        System.out.println("\n=========INSERT===========");
         Seller newSeller = new Seller(null, "Chris tiro certo 4", "chris@gmail.com", LocalDate.now(), 4200.00, new Department(1, null));
         sellerDao.insert(newSeller);
         System.out.println(newSeller);
+
+        System.out.println("\n=========UPDATE===========");
+        newSeller = sellerDao.findById(10);
+        newSeller.setName("Bruce Waine da Bhaia");
+        sellerDao.update(newSeller);
+        System.out.println(newSeller);
+
 
     }
 }
