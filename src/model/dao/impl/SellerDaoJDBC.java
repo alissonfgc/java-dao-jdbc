@@ -65,7 +65,11 @@ public class SellerDaoJDBC implements SellerDao {
             st.setInt(5, seller.getDepartment().getId());
             st.setInt(6, seller.getId());
 
-            st.executeUpdate();
+            int rowsAffected = st.executeUpdate();
+
+            if (rowsAffected < 0) {
+                throw new DbException("Unexpected error! No rows affected!");
+            }
 
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
