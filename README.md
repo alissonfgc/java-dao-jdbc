@@ -52,15 +52,14 @@ Lista de métodos de cada classe no pacote entities:
 > [!IMPORTANT]
 > Para a implementação do método findByDepartment, da classe sellerDAO, não basta criar um objeto para cada linha retornada do banco de dados.
 
-
-
 SQL Query:
+```mysql
  SELECT seller.*,department.Name as DepName
  FROM seller INNER JOIN department
  ON seller.DepartmentId = department.Id
  WHERE DepartmentId = ?
  ORDER BY Name
-
+```
 
 
 ![findByDepartment_method_UML](https://github.com/alissonfgc/java-dao-jdbc/assets/72516014/b507ab24-5250-4ffc-834d-3ff4a8f08acb)
