@@ -1,10 +1,16 @@
 # Acesso a banco de dados com JDBC
 <a id="readme-top"></a>
 
-### Objetivo geral:
-* Conhecer os principais recursos do JDBC na teoria e prática
-* Elaborar a estrutura básica de um projeto com JDBC
-* Implementar o padrão DAO manualmente com JDBC
+> Projeto Back-end
+
+### Objetivo: Implementar o padrão DAO manualmente com JDBC
+
+## Feito com
+
+* ![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+* ![MySQL](https://img.shields.io/badge/mysql-4479A1.svg?style=for-the-badge&logo=mysql&logoColor=white)
+* ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJIDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white)
+* ![Git](https://img.shields.io/badge/git-%23F05033.svg?style=for-the-badge&logo=git&logoColor=white)
 
 
 
