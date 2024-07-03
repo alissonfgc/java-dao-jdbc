@@ -49,10 +49,18 @@ Lista de métodos de cada classe no pacote entities:
 ![entities_classes_diagram](https://github.com/alissonfgc/java-dao-jdbc/assets/72516014/52963df2-4496-47a9-88ef-1a3ac72c83ea)
 
 
+
+## UML do Banco de dados
+
+![database_UML](https://github.com/alissonfgc/java-dao-jdbc/assets/72516014/32c7c500-0a94-4595-a390-165354b50627)
+
+## Observações
+
 > [!IMPORTANT]
 > Para a implementação do método findByDepartment, da classe sellerDAO, não basta criar um objeto para cada linha retornada do banco de dados.
 
-SQL Query:
+O método findByDepartment() da implementação da classe sellerDAO execuda a seguinte requisição ao banco de dados:
+
 ```mysql
  SELECT seller.*,department.Name as DepName
  FROM seller INNER JOIN department
@@ -60,6 +68,36 @@ SQL Query:
  WHERE DepartmentId = ?
  ORDER BY Name
 ```
+Onde a interrogação é substituida pelo valor recebido no parametro do método.
+Então o método retorna uma lista de objetos do tipo Seller, e para o relacionamento correto entre os objetos, foi necessária a seguinte implementação:
+
+```java
+st = conn.prepareStatement("SELECT seller.*,department.Name as DepName FROM seller INNER JOIN department ON seller.DepartmentId = department.Id WHERE DepartmentId = ? ORDER BY Name;");
+st.setInt(1, department.getId());
+rs = st.executeQuery();
+
+List<Seller> sellers = new ArrayList<>();
+Map<Integer, Department> map = new HashMap<>();
+
+while (rs.next()) {
+ Department dep = map.get(rs.getInt("DepartmentId"));
+ if (dep == null) {
+  dep = instanciateDepartment(rs);
+  map.put(rs.getInt("DepartmentId"), dep);
+ }
+
+ Seller seller = instanciateSeller(rs, dep);
+ sellers.add(seller);
+}
+
+return sellers;
+
+```
+
+Deste jeito apenas vai ser instanciado um objeto do tipo Department, caso não exista nenhum com o Id correspondente.
+
+
+
 
 
 ![findByDepartment_method_UML](https://github.com/alissonfgc/java-dao-jdbc/assets/72516014/b507ab24-5250-4ffc-834d-3ff4a8f08acb)
