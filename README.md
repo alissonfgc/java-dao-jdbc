@@ -71,6 +71,38 @@ O método findByDepartment() da implementação da classe sellerDAO execuda a se
 Onde a interrogação é substituida pelo valor recebido no parametro do método.
 Então o método retorna uma lista de objetos do tipo Seller, e para o relacionamento correto entre os objetos, foi necessária a seguinte implementação:
 
+### Forma incorreta
+
+```java
+st = conn.prepareStatement("SELECT seller.*,department.Name as DepName FROM seller INNER JOIN department ON seller.DepartmentId = department.Id WHERE DepartmentId = ? ORDER BY Name;");
+st.setInt(1, department.getId());
+rs = st.executeQuery();
+
+List<Seller> sellers = new ArrayList<>();
+Map<Integer, Department> map = new HashMap<>();
+
+while (rs.next()) {
+ Department dep = map.get(rs.getInt("DepartmentId"));
+ if (dep == null) {
+  dep = instanciateDepartment(rs);
+  map.put(rs.getInt("DepartmentId"), dep);
+ }
+
+ Seller seller = instanciateSeller(rs, dep);
+ sellers.add(seller);
+}
+
+return sellers;
+
+```
+
+Deste jeito vai ser instanciado um objeto do tipo Department, para cada objeto do tipo Seller.
+ conforme o primeiro exemplo da imagem.
+
+![findByDepartment_method_UML](https://github.com/alissonfgc/java-dao-jdbc/assets/72516014/b507ab24-5250-4ffc-834d-3ff4a8f08acb)
+
+### Forma correta
+
 ```java
 st = conn.prepareStatement("SELECT seller.*,department.Name as DepName FROM seller INNER JOIN department ON seller.DepartmentId = department.Id WHERE DepartmentId = ? ORDER BY Name;");
 st.setInt(1, department.getId());
@@ -95,17 +127,9 @@ return sellers;
 ```
 
 Deste jeito apenas vai ser instanciado um objeto do tipo Department, caso não exista nenhum com o Id correspondente.
+ conforme o segundo exemplo da imagem.
 
-
-
-
-
-![findByDepartment_method_UML](https://github.com/alissonfgc/java-dao-jdbc/assets/72516014/b507ab24-5250-4ffc-834d-3ff4a8f08acb)
-
-
-
-
-
-Fonte: http://educandoweb.com.br/
-Curso: Programação Orientada a Objetos com Java
-Professor: Dr. Nelio Alves
+## Creditos
+* http://educandoweb.com.br/
+* Curso: Programação Orientada a Objetos com Java
+* Professor: Dr. Nelio Alves
